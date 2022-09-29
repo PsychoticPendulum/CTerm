@@ -1,6 +1,6 @@
 #include "CTerm.h"
 
 int main(int argc, char **argv) {
-    Confirm("Are you here?");
+    test();
     return EXIT_SUCCESS;
 }

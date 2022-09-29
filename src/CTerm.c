@@ -1,5 +1,31 @@
 #include "CTerm.h"
 
+// class UNICODE:
+// 
+//     TOPRIGHT    = ["╮","┓","╗","╮","-"]
+//     VERTICAL    = ["│","┃","║","╎","|"]
+//     BOTTOMLEFT  = ["╰","┗","╚","╰","-"]
+//     TOPLEFT     = ["╭","┏","╔","╭","-"]
+//     BOTTOMRIGHT = ["╯","┛","╝","╯","-"]
+//     HORIZONTAL  = ["─","━","═","╌","-"]
+
+// Topleft      U+256D
+// Topright     U+256E
+// Bottomrigh   U+256F
+// Bottomleft   U+2570
+
+struct UNICODE {
+    char TOPRIGHT[3];
+    char VERTICAL[3];
+    char BOTTOMLEFT[3];
+    char TOPLEFT[3];
+    char BOTTOMRIGHT[3];
+    char HORIZONTAL[3];
+};
+// struct UNICODE unicode = {
+//     {"╮","┓","╗","╮"}
+// };
+
 void GetTerminalSize(short unsigned int *width, short unsigned int *height) {
 	struct winsize s;
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &s);
@@ -26,10 +52,11 @@ void Feedback(bool positive) {
     GetTerminalSize(&w,&h);
     printf(UTIL_UP);
 
-    char *txt = " Done! ";
+    char *txt = positive ? " Done! " : " Discarded! ";
+    char *col = positive ? FG_GREEN : FG_RED;
     int length = w - strlen(txt);
     for (int i = 0; i < length; i++) { printf(UTIL_RIGHT); }
-    printf(FG_GREEN UTIL_REVERSE "%s" UTIL_RESET, txt);
+    printf("%s" UTIL_BOLD UTIL_REVERSE "%s" UTIL_RESET, col, txt);
 }
 
 bool Confirm(char *msg) {
@@ -39,4 +66,8 @@ bool Confirm(char *msg) {
     bool answer = (response[0] == 'Y' || response[0] == 'y') ? true : false; 
     Feedback(answer);
     return answer;
+}
+
+void test() {
+    printf("\U0000231F\n");
 }
