@@ -26,6 +26,12 @@ struct UNICODE {
 //     {"╮","┓","╗","╮"}
 // };
 
+bool CTerm_Init() {
+    printf(UTIL_CLEAR UTIL_TOP);
+    while (true) { Prompt(); }
+    return true;
+}
+
 void GetTerminalSize(short unsigned int *width, short unsigned int *height) {
 	struct winsize s;
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &s);
