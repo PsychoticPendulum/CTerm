@@ -43,6 +43,7 @@ void Bar(char *left, char *right, char *color) {
     short unsigned int w,h;
     GetTerminalSize(&w, &h);
     SetCursor(0,h);
+    printf(UTIL_UP UTIL_CLEARLINE "\n");
 
     printf("%s" FG_BLACK, color == NULL ? BG_GREEN : color);
     int length = w - (strlen(left) + strlen(right) + 0x4);
